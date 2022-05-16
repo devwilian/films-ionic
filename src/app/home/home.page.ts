@@ -1,3 +1,5 @@
+import { FilmResult } from './../interfaces/listfilms.interface';
+import { FilmService } from './../services/film.service';
 import { Component } from '@angular/core';
 import { DataService, Message } from '../services/data.service';
 
@@ -7,8 +9,16 @@ import { DataService, Message } from '../services/data.service';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  constructor(private data: DataService) {}
+  films: FilmResult[] = [];
 
+  constructor(private data: DataService, private filmService: FilmService) {}
+
+  ngOnInit() {
+    return this.filmService.getFilms().subscribe((films) => {
+      this.films = films;
+      console.log(this.films);
+    });
+  }
   refresh(ev) {
     setTimeout(() => {
       ev.detail.complete();
@@ -18,5 +28,10 @@ export class HomePage {
   getMessages(): Message[] {
     return this.data.getMessages();
   }
-
+  searchFilm(event) {
+    return this.filmService.getSearch(event.target.value).subscribe((films) => {
+      this.films = films;
+      console.log(this.films);
+    });
+  }
 }
