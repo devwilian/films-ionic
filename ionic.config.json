@@ -1,0 +1,7 @@
+{
+  "name": "ifilms",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
